@@ -22,7 +22,7 @@ def main():
          "LOOPBACK": "10.10.10.10",
          "MPE_HSRP_IP": "60.60.60.1",
          "VLAN600_IP": "60.60.60.15",
-         "SUBNETMAST_LENGTH": "24"}
+         "SUBNETMASK_LENGTH": "24"}
 
     output = template.render(
          MCE = device["MCE"],
@@ -34,7 +34,7 @@ def main():
          LOOPBACK = device["LOOPBACK"],
          MPE_HSRP_IP = device["MPE_HSRP_IP"],
          VLAN600_IP = device["VLAN600_IP"],
-         SUBNETMAST_LENGTH = device["SUBNETMAST_LENGTH"])
+         SUBNETMASK_LENGTH = device["SUBNETMASK_LENGTH"])
 
     print(output)
 
