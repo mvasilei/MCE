@@ -25,7 +25,7 @@ def main():
         exit()
 
     with open(options.filename, 'r') as f:
-        data = f.read()
+        data = "{" + f.read() + "}"
 
     device = json.loads(data)
 
