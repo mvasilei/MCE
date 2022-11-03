@@ -39,7 +39,9 @@ def main():
          LOOPBACK = device["LOOPBACK"],
          MPE_HSRP_IP = device["MPE_HSRP_IP"],
          VLAN600_IP = device["VLAN600_IP"],
-         SUBNETMASK_LENGTH = device["SUBNETMASK_LENGTH"])
+         SUBNETMASK_LENGTH = device["SUBNETMASK_LENGTH"],
+         MPE = device["MPE"],
+         MPE_IF = device["MPE_IF"])
 
     print(output)
 
