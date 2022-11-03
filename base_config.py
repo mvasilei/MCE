@@ -17,6 +17,8 @@ def main():
                       help='Read vlan data from FILENAME')
     parser.add_option('-o', '--odd', action='store_true', dest='odd',
                       help='Odd numbered MCE')
+    parser.add_option('-s', '--stack', action='store_true', dest='stack',
+                      help='Indicate Virtual Chassis (stack)')
 
     (options, args) = parser.parse_args()
 
@@ -36,6 +38,9 @@ def main():
     env.rstrip_blocks = True
 
     template = env.get_template('base_config.txt')
+    if (options.stack):
+        template = env.get_template('base_config_stack.txt')
+
     output = template.render(
          MCE = device["MCE"],
          NMCE=device["NMCE"], #neighbour MCE
