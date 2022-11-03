@@ -38,6 +38,7 @@ def main():
     template = env.get_template('base_config.txt')
     output = template.render(
          MCE = device["MCE"],
+         NMCE=device["NMCE"], #neighbour MCE
          LOCATION = device["LOCATION"],
          SNMP_SHA = device["SNMP_SHA"],
          SNMP_AES = device["SNMP_AES"],
