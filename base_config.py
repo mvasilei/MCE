@@ -9,14 +9,14 @@ def signal_handler(sig, frame):
      sys.exit()
 
 def main():
-    file_loader = FileSystemLoader('.')
-    env = Environment(loader=file_loader)
-    template = env.get_template('base_config.txt')
-
     usage = 'usage: %prog options [arg]'
     parser = OptionParser(usage)
-    parser.add_option('-f', '--file', dest='filename',
-                      help='Read data from FILENAME')
+    parser.add_option('-b', '--base', dest='base_config',
+                      help='Read base config data from FILENAME')
+    parser.add_option('-v', '--vlan', dest='vlan',
+                      help='Read vlan data from FILENAME')
+    parser.add_option('-o', '--odd', action='store_true', dest='odd',
+                      help='Odd numbered MCE')
 
     (options, args) = parser.parse_args()
 
@@ -24,11 +24,18 @@ def main():
         parser.print_help()
         exit()
 
-    with open(options.filename, 'r') as f:
+    with open(options.base_config, 'r') as f:
         data = "{" + f.read() + "}"
 
     device = json.loads(data)
 
+    file_loader = FileSystemLoader('.')
+    env = Environment(loader=file_loader)
+    env.trim_blocks = True
+    env.lstrip_blocks = True
+    env.rstrip_blocks = True
+
+    template = env.get_template('base_config.txt')
     output = template.render(
          MCE = device["MCE"],
          LOCATION = device["LOCATION"],
@@ -42,6 +49,19 @@ def main():
          SUBNETMASK_LENGTH = device["SUBNETMASK_LENGTH"],
          MPE = device["MPE"],
          MPE_IF = device["MPE_IF"])
+
+    print(output)
+
+    vlan_list = []
+    with open(options.vlan, 'r') as f:
+        for line in f:
+            vlan_list.append(json.loads(line.strip('\n')))
+
+    if (options.odd):
+        template = env.get_template('vlan_config_odd.txt')
+    else:
+        template = env.get_template('vlan_config_even.txt')
+    output = template.render(vlan_list = vlan_list)
 
     print(output)
 
