@@ -1,5 +1,4 @@
-# MCE
-Jinja based project templating migration configuration
+# Jinja based project templating migration configuration
 
 Login on Lab bastion
 
