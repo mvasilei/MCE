@@ -13,7 +13,7 @@ download the base_config.py file and the file that's attached on the config quid
 
 chmod 775 base_config.py
 ===
-run the scrpt e.g.
+run the script e.g.
 
 ./base_config.py -b device_details.txt -v vlan.txt -o
 ===
