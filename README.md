@@ -12,9 +12,11 @@ pip3.6 install --upgrade Jinja2
 download the base_config.py file and the file that's attached on the config quide in bastion under ~/mce/venv
 
 chmod 775 base_config.py
+===
+run the scrpt e.g.
 
-./base_config.py
-
+./base_config.py -b device_details.txt -v vlan.txt -o
+===
 create a file on your local directory with the following format
 
 "MCE": "UKX...",
