@@ -14,7 +14,7 @@ chmod 775 base_config.py
 ===
 run the script e.g.
 
-./base_config.py -b device_details.txt -v vlan.txt -o
+./base_config.py -b device_details.txt -v vlan.txt -o -s
 ===
 create a file on your local directory with the following format
 ```
