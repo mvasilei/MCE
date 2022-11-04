@@ -63,10 +63,10 @@ def main():
         for line in f:
             vlan_list.append(json.loads(line.strip('\n')))
 
+    template = env.get_template('vlan_config_even.txt')
     if (options.odd):
         template = env.get_template('vlan_config_odd.txt')
-    else:
-        template = env.get_template('vlan_config_even.txt')
+
     output = template.render(vlan_list = vlan_list)
 
     print(output)
