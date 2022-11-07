@@ -2,11 +2,13 @@
 
 Login on Lab bastion
 
-python3 -m venv ./mce/env
+python3.6 -m venv ./mce/env
 
 source bin/activate
 
-pip3.6 install Jinja2
+pip install --upgrade pip
+
+pip install Jinja2
 
 download the base_config.py file and the file that's attached on the config quide in bastion under ~/mce/venv
 
