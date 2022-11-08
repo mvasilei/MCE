@@ -29,5 +29,5 @@ create a file on your local directory with the following format
 "LOOPBACK": "IP OF DEVICE LO I/F",
 "MPE_HSRP_IP": "VLAN 600 VIP",
 "VLAN600_IP": "VLAN 600 LOCAL IP",
-"SUBNETMASK_LENGTH": "BIT NUMBERS"
+"SUBNETMASK_LENGTH": "BITS NUMBER"
 ```
