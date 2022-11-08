@@ -30,6 +30,7 @@ def main():
         data = "{" + f.read() + "}"
 
     device = json.loads(data)
+    print(device)
 
     file_loader = FileSystemLoader('.')
     env = Environment(loader=file_loader)
@@ -41,20 +42,7 @@ def main():
     if (options.stack):
         template = env.get_template('base_config_stack.txt')
 
-    output = template.render(
-         MCE = device["MCE"],
-         NMCE=device["NMCE"], #neighbour MCE
-         LOCATION = device["LOCATION"],
-         SNMP_SHA = device["SNMP_SHA"],
-         SNMP_AES = device["SNMP_AES"],
-         TACACS_PASSWORD = device["TACACS_PASSWORD"],
-         LOCAL_PASSWORD = device["LOCAL_PASSWORD"],
-         LOOPBACK = device["LOOPBACK"],
-         MPE_HSRP_IP = device["MPE_HSRP_IP"],
-         VLAN600_IP = device["VLAN600_IP"],
-         SUBNETMASK_LENGTH = device["SUBNETMASK_LENGTH"],
-         MPE = device["MPE"],
-         MPE_IF = device["MPE_IF"])
+    output = template.render(device=device)
 
     print(output)
 
@@ -67,7 +55,7 @@ def main():
     if (options.odd):
         template = env.get_template('vlan_config_odd.txt')
 
-    output = template.render(vlan_list = vlan_list)
+    output = template.render(vlan_list=vlan_list)
 
     print(output)
 
