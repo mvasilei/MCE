@@ -19,6 +19,8 @@ def main():
                       help='Odd numbered MCE')
     parser.add_option('-s', '--stack', action='store_true', dest='stack',
                       help='Indicate Virtual Chassis (stack)')
+    parser.add_option('-p', '--port', dest='port',
+                      help='Read port allocations from FILENAME')
 
     (options, args) = parser.parse_args()
 
@@ -26,38 +28,58 @@ def main():
         parser.print_help()
         exit()
 
-    with open(options.base_config, 'r') as f:
-        data = "{" + f.read() + "}"
+    if options.base_config and options.vlan:
+        with open(options.base_config, 'r') as f:
+            data = "{" + f.read() + "}"
 
-    device = json.loads(data)
-    print(device)
+        device = json.loads(data)
+        print(device)
 
-    file_loader = FileSystemLoader('.')
-    env = Environment(loader=file_loader)
-    env.trim_blocks = True
-    env.lstrip_blocks = True
-    env.rstrip_blocks = True
+        file_loader = FileSystemLoader('.')
+        env = Environment(loader=file_loader)
+        env.trim_blocks = True
+        env.lstrip_blocks = True
+        env.rstrip_blocks = True
 
-    template = env.get_template('base_config.txt')
-    if (options.stack):
-        template = env.get_template('base_config_stack.txt')
+        template = env.get_template('base_config.txt')
 
-    output = template.render(device=device)
+        if (options.stack):
+            template = env.get_template('base_config_stack.txt')
 
-    print(output)
+        output = template.render(device=device)
+        print(output)
 
-    vlan_list = []
-    with open(options.vlan, 'r') as f:
-        for line in f:
-            vlan_list.append(json.loads(line.strip('\n')))
+        vlan_list = []
+        with open(options.vlan, 'r') as f:
+            for line in f:
+                vlan_list.append(json.loads(line.strip('\n')))
 
-    template = env.get_template('vlan_config_even.txt')
-    if (options.odd):
-        template = env.get_template('vlan_config_odd.txt')
+            template = env.get_template('vlan_config_even.txt')
+            if (options.odd):
+                template = env.get_template('vlan_config_odd.txt')
 
-    output = template.render(vlan_list=vlan_list)
+            output = template.render(vlan_list=vlan_list)
+            print(output)
 
-    print(output)
+    elif options.port and not options.vlan and not options.base_config and not options.stack:
+        port_list = []
+        with open(options.port, 'r') as f:
+            for line in f:
+                port_list.append(json.loads(line.strip('\n')))
+
+            file_loader = FileSystemLoader('.')
+            env = Environment(loader=file_loader)
+            env.trim_blocks = True
+            env.lstrip_blocks = True
+            env.rstrip_blocks = True
+
+            template = env.get_template(    'port_config.txt')
+            output = template.render(port_list=port_list)
+            print(output)
+    else:
+        print('\nERROR: Base config (-b) must be combinted with vlan (-v)')
+        parser.print_help()
+        exit()
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)  #catch ctrl-c and call handler to terminate the script
