@@ -33,7 +33,6 @@ def main():
             data = "{" + f.read() + "}"
 
         device = json.loads(data)
-        print(device)
 
         file_loader = FileSystemLoader('.')
         env = Environment(loader=file_loader)
