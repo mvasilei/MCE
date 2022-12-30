@@ -40,7 +40,7 @@ def main():
 
         template = env.get_template('base_config.txt')
 
-        if (options.stack):
+        if options.stack:
             template = env.get_template('base_config_stack.txt')
 
         output = template.render(device=device)
@@ -58,7 +58,7 @@ def main():
             else:
                 template = env.get_template('vlan_config_odd.txt')
 
-            output = template.render(vlan_list=vlan_list)
+            output = template.render(vlan_list=vlan_list, stack=options.stack)
             print(output)
 
     elif options.port and not options.vlan and not options.base_config and not options.stack:
