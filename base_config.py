@@ -53,9 +53,13 @@ def main():
             for line in f:
                 vlan_list.append(json.loads(line.strip('\n')))
 
-            template = env.get_template('vlan_config_even.txt')
-            if (options.odd):
-                template = env.get_template('vlan_config_odd.txt')
+            if '03' in device['MCE'] or '04' in device['MCE']:
+                template = env.get_template('subtend.txt')
+            else:
+                template = env.get_template('vlan_config_even.txt')
+
+                if options.odd:
+                    template = env.get_template('vlan_config_odd.txt')
 
             output = template.render(vlan_list=vlan_list)
             print(output)
@@ -72,11 +76,11 @@ def main():
             env.lstrip_blocks = True
             env.rstrip_blocks = True
 
-            template = env.get_template(    'port_config.txt')
+            template = env.get_template('port_config.txt')
             output = template.render(port_list=port_list)
             print(output)
     else:
-        print('\nERROR: Base config (-b) must be combinted with vlan (-v)')
+        print('\nERROR: Base config (-b) must be combined with vlan (-v)')
         parser.print_help()
         exit()
 
