@@ -15,8 +15,6 @@ def main():
                       help='Read base config data from FILENAME')
     parser.add_option('-v', '--vlan', dest='vlan',
                       help='Read vlan data from FILENAME')
-    parser.add_option('-o', '--odd', action='store_true', dest='odd',
-                      help='Odd numbered MCE')
     parser.add_option('-s', '--stack', action='store_true', dest='stack',
                       help='Indicate Virtual Chassis (stack)')
     parser.add_option('-p', '--port', dest='port',
@@ -55,11 +53,10 @@ def main():
 
             if '03' in device['MCE'] or '04' in device['MCE']:
                 template = env.get_template('subtend.txt')
-            else:
+            elif '02' in device['MCE']:
                 template = env.get_template('vlan_config_even.txt')
-
-                if options.odd:
-                    template = env.get_template('vlan_config_odd.txt')
+            else:
+                template = env.get_template('vlan_config_odd.txt')
 
             output = template.render(vlan_list=vlan_list)
             print(output)
