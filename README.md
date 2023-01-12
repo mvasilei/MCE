@@ -21,6 +21,7 @@ run the script e.g.
 create a file on your local directory with the following format
 ```
 "MCE": "UKX...",
+"NMCE": "UKX...",
 "LOCATION": "MTX RACK details",
 "SNMP_SHA": "SHA KEY",
 "SNMP_AES": "AES KEY",
